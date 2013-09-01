@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>MoCo</title>
+    
+    <script src="scripts/jquery-1.10.2.min.js"></script>
+    <script src="scripts/jquery.mobile-1.3.2.min.js"></script>
+    <script src="scripts/knockout-2.3.0.js"></script>
+    <script src="scripts/knockout.mapping-latest.js"></script>
+
+    <link href="styles/jquery.mobile-1.3.2.min.css" rel="stylesheet" />
+    <link href="styles/jquery.mobile.theme-1.3.2.min.css" rel="stylesheet" />
+    <link href="styles/jquery.mobile.structure-1.3.2.min.css" rel="stylesheet" />
+
+    <script src="viewmodels/scoreboard.viewmodel.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+
+    <div data-role="page" id="indexPage" data-viewmodel="indexViewModel">
+        <div data-theme="a" data-role="header">
+            <h3>Bowling Scoreboard</h3>
+            <button data-bind="click: clear" data-icon="delete">Clear</button>
+        </div>
+        <div data-role="content">
+            <ol data-bind="foreach: frames" data-role="listview" data-divider-theme="b" data-inset="false">
+                <li data-theme="c" class="ui-li ui-li-static ui-btn-up-c ui-first-child ui-last-child"
+                    data-bind="attr: { style: strike() ? 'background-color: #B8E5FA;' : (spare() ? 'background-color: #D4E98E;' : 'background-color: #EEE8EE;') }">
+                    <span data-bind="text: firstball" style="margin-left: 10px;"></span>
+                    <span data-bind="text: secondball, visible: state() > 1 && firstball() < 10" style="margin-left: 30px;"></span>
+                    <span data-bind="text: framescore, visible: realframe" style="float: right;"></span>
+                </li>
+            </ol>
+        </div>
+        <div data-theme="a" data-role="footer" data-id="application-footer" data-position="fixed">
+            <div data-role="navbar" data-iconpos="top">
+                <input data-bind="value: score" type="number" data-mini="true" data-theme="b" min="0" max="10" data-highlight="true">
+                <button data-bind="click: add" data-icon="star">Add Score</button>
+            </div>
+        </div>
+        <h3 style="float: left; margin-left: 10px">Total Score</h3>
+        <h3 data-bind="text: totalscore" style="float: right; margin-right: 20px"></h3>
+    </div>
+    <script type="text/javascript">
+        ko.applyBindings(new scoreboardViewModel())
+    </script>
+
+</body>
+</html>
+
